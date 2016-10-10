@@ -1,0 +1,3 @@
+module Snazz
+  # Your code goes here...
+end
