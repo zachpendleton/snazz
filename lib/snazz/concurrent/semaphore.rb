@@ -42,7 +42,7 @@ redis.call("zremrangebyscore", key, "-inf", timeout_threshold)
 if redis.call("zcount", key, "-inf", "+inf") >= max_leases then
   return 0
 end
-redis.call("zadd", KEYS[1], now, id)
+redis.call("zadd", key, now, id)
 return 1
         LUA
         acquired_lock == 1
