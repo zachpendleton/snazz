@@ -4,7 +4,7 @@ module Snazz
   module Middleware
     class ThrottlingMiddlewareTest < Minitest::Test
       def setup
-        @connection = Redis.new(url: "redis://localhost:6379")
+        @connection = Redis.new(url: redis_url)
         @subject = ThrottlingMiddleware.new
         @worker = Snazz::Worker::ThrottledWorker.new
         @queue = "default"
