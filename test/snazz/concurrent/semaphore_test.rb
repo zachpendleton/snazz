@@ -10,7 +10,7 @@ module Snazz
       TIMEOUT = 100
 
       def setup
-        @connection = Redis.new(url: "redis://localhost:6379")
+        @connection = Redis.new(url: redis_url)
         @subject = Semaphore.new(KEY, @connection, 1, 500)
         @connection.flushdb
       end
