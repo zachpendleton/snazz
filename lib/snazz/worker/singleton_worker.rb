@@ -1,6 +1,6 @@
 module Snazz
   module Worker
-    class SingletonWorker
+    module SingletonWorker
     end
   end
 end

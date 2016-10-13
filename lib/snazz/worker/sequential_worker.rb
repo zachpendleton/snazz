@@ -1,6 +1,6 @@
 module Snazz
   module Worker
-    class SequentialWorker
+    module SequentialWorker
     end
   end
 end

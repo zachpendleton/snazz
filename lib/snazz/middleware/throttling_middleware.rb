@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require "json"
 require "sidekiq"
 require "snazz/concurrent/semaphore"
@@ -10,11 +11,15 @@ module Snazz
         return yield unless worker.is_a?(Snazz::Worker::ThrottledWorker)
         Sidekiq.redis do |connection|
           begin
-            semaphore = Snazz::Concurrent::Semaphore.new(worker.key,
+            options = job["args".freeze].pop
+            key = options.fetch("key".freeze)
+            semaphore = Snazz::Concurrent::Semaphore.new(key,
                                                          connection,
                                                          worker.max_leases,
                                                          worker.timeout)
             semaphore.wait(&block)
+          rescue KeyError
+            Sidekiq.logger.error "No semaphore key provided".freeze
           rescue Snazz::Concurrent::SemaphoreNotAcquiredError
             connection.lpush("queue:#{queue}", job.to_json)
           end

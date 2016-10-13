@@ -1,6 +1,6 @@
 module Snazz
   module Worker
-    class PeriodicWorker
+    module PeriodicWorker
     end
   end
 end
