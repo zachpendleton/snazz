@@ -18,7 +18,7 @@ module Snazz
       def test_it_acquires_a_lock
         lock_acquired = false
 
-        @subject.wait do |conn|
+        @subject.wait do
           lock_acquired = true
         end
 
@@ -29,8 +29,8 @@ module Snazz
         @other_subject = create_semaphore
 
         assert_raises SemaphoreNotAcquiredError do
-          @subject.wait do |conn|
-            @other_subject.wait { |conn| }
+          @subject.wait do
+            @other_subject.wait {}
           end
         end
       end
@@ -39,13 +39,13 @@ module Snazz
         @other_subject = create_semaphore
 
         Thread.new do
-          @subject.wait do |conn|
+          @subject.wait do
             sleep (TIMEOUT * 2) / 1000.0
           end
         end
         sleep (TIMEOUT * 1.5) / 1000.0
         acquired_lock = false
-        @other_subject.wait do |conn|
+        @other_subject.wait do
           acquired_lock = true
         end
 
@@ -53,7 +53,7 @@ module Snazz
       end
 
       def test_it_releases_the_lock_after_block_executes
-        @subject.wait { |conn| }
+        @subject.wait {}
         assert !@subject.acquired?
       end
 
