@@ -25,9 +25,10 @@ module Snazz
         release if block_given?
       end
 
-      private
-
       attr_reader :connection, :key, :max_leases
+      private :connection, :key, :max_leases
+
+      private
 
       def acquire
         timeout_threshold = now - @timeout

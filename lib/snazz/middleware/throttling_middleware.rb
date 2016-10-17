@@ -15,7 +15,7 @@ module Snazz
                                                          worker.max_leases,
                                                          worker.timeout)
             semaphore.wait(&block)
-          rescue Snazz::Concurrent::SemaphoreNotAcquiredError => e
+          rescue Snazz::Concurrent::SemaphoreNotAcquiredError
             connection.lpush("queue:#{queue}", job.to_json)
           end
         end
